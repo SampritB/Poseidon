@@ -1,0 +1,32 @@
+﻿@model IEnumerable<Poseidon.Models.ImageInfo>
+
+@{
+    ViewBag.Title = "Data";
+}
+
+<h2>Data</h2>
+
+<a href="@Url.Action("CSV")">Download all as CSV</a>
+
+<table>
+    <tr>
+        <td><div id="filetree"></div></td>
+        <td><a id="imageLink" href="#"><img id="preview" width="640" height="480" alt="" /></a></td>
+    </tr>
+</table>
+
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        function updateTree() {
+            $('#filetree').fileTree({ root: '', script: '@Url.Action("Index", "Folder")' }, function (file) {
+                $('#preview').attr('src', '@Url.Action("Index", "Image")?width=640&drawLabels=true&id=' + file);
+                $('#imageLink').attr('href', '@Url.Action("Labels", "Data")?id=' + file);
+            }, function (folder) {
+                $('#folder').val(folder);
+            });
+        }
+
+        updateTree();
+    </script>
+}

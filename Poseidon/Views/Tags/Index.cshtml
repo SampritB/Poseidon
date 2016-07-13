@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "Tags";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Ajax.BeginForm("Grid", "Tag", new AjaxOptions
+{
+    HttpMethod = "Post",
+    InsertionMode = InsertionMode.Replace,
+    UpdateTargetId = "grid",
+}))
+{
+<fieldset>
+    <legend>Filter Tags</legend>
+    <table><tr>
+        <td><label for="tag">Tag:</label></td>
+        <td><input id="tag" type="text" name="term" value="" /></td>
+        <td><input type="submit" value="Filter"/></td>
+    </tr></table>
+</fieldset>
+}
+<div id="grid">
+@Html.Action("Grid")
+</div>
+
+@section scripts {
+@Scripts.Render("~/bundles/jqueryval")
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#tag").autocomplete({
+            source: "@Url.Action("List", "Tag")",
+            minLength: 2,
+        });
+
+        $('#tags_tab').addClass("selected");
+    });
+</script>
+}
+

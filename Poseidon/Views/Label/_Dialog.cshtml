@@ -1,0 +1,44 @@
+﻿@model Poseidon.Models.Label
+
+@using (Ajax.BeginForm("UpdateInfo", "Label", new AjaxOptions { HttpMethod = "POST", InsertionMode = InsertionMode.Replace, UpdateTargetId = "labelSamples" }))
+{
+    <fieldset>
+    <legend>ImageInfo</legend>
+
+    <input type="hidden" id="labelID" name="id" value="@Model.Id" />
+
+    <div class="editor-label">
+        <label>Image:</label>
+    </div>
+    <div class="editor-field">
+        <input type="text" value="@ViewBag.Title" readonly />     
+    </div>
+    <div class="editor-label">
+        <label for="tag">Tag:</label>
+    </div>
+    <div class="editor-field">
+        <input id="labelTag" type="text" value="@Model.Tag" name="tag" />
+    </div>
+    <div class="editor-label">
+        <label for="comment">Comment:</label>
+    </div>
+    <div class="editor-field">
+        <textarea rows="4" cols="50" name="comment" >@Model.Comment</textarea>
+    </div>
+
+    <p>
+        <input type="submit" value="Apply" />
+    </p>
+</fieldset>
+<center><img src="@Url.Action("Index", "Image", new { id = Model.ImageInfoId.ToString(), w = 100, h = 100, mode = "max", crop = Model.Crop })" alt="@Model.ImageInfoId"></center>
+<div id="labelSamples">
+    @Html.Action("Grid", "Tag", new { term = Model.Tag, includeAll = true, includeLinks = false, patchSize = 50, max = 16, title = "Samples for " + Model.Tag })
+</div>
+}
+
+<script type="text/javascript">
+    $("#labelTag").autocomplete({
+        source: "@Url.Action("List", "Tag")",
+        minLength: 2,
+    }); 
+</script>

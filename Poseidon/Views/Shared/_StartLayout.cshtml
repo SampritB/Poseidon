@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Poseidon - @ViewBag.Title</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/themes/base/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div id="banner">
+        <img id="logo" src="@Url.Content("~/Images/starfish.png")" alt="starfish" />
+        <h1 id="poseidon_header">@Html.ActionLink("Poseidon", "Index", "Home")</h1>
+        <img id="logo2" src="@Url.Content("~/Images/zsl_ucl_logo_horiz.png")" alt="zsl_ucl_logo" />
+    </div>
+
+    <div id="hrule"></div>
+
+    <div id="content">
+    @RenderBody()
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

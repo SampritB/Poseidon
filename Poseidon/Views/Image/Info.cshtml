@@ -1,0 +1,51 @@
+﻿@model Poseidon.Models.ImageInfo
+
+@{
+    ViewBag.Title = "Info";
+}
+
+<h2>Info</h2>
+
+<table>
+    <tr>
+        <td><img src="@Url.Action("Index", "Image", new {id=Model.Id.ToString(), width=640, drawLabels=true})" alt="@Model.Id.ToString()" /></td>
+        <td valign="top">
+            <div id="imageTags" style="padding:10px">
+                @Html.Action("Tags", "Image", new { id = Model.Id })
+            </div>
+        </td>
+        <td valign="top">
+            <div style="padding:10px">
+                <h3 style="margin-bottom:20px">Image Title</h3>
+                @using (Html.BeginForm())
+                {
+                    @Html.ValidationSummary(true)
+
+                    <fieldset>
+                        <legend>ImageInfo</legend>
+
+                        @Html.HiddenFor(model => model.Id)
+                        @Html.HiddenFor(model => model.FileId)
+                        @Html.HiddenFor(model => model.CreateDate)
+                        @Html.HiddenFor(model => model.UserID)
+                        @Html.HiddenFor(model => model.Width)
+                        @Html.HiddenFor(model => model.Height)
+
+                        <div class="editor-field">
+                            @Html.EditorFor(model => model.Title)
+                            @Html.ValidationMessageFor(model => model.Title)
+                        </div>
+                        <input type="submit" value="Save" style="display:block;margin:5px auto;height:22px;padding:0px;font-size:10px"/>
+                    </fieldset>
+                }
+            </div>
+        </td>
+        <td>
+            <input type="button" class="big_button" value="Back to Images" onclick="location.href='@Url.Action("Collection", "Image")'"  />
+        </td>
+    </tr>
+</table>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

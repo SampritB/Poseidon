@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "Home";
+}
+
+<h2>Welcome, @User.Identity.Name.</h2>
+
+<h3>Possible actions:</h3>
+<ol class="round">
+    <li class="one">
+        <h5>Manage Image Collection</h5>
+        The @Html.ActionLink("Images", "Collection", "Image") tab lets you to view your image collection, add new images, and update existing images.
+    </li>
+
+    <li class="two">
+        <h5>Label Images</h5>
+        The @Html.ActionLink("Label", "Index", "Label") tab lets you choose an image and label it with tags, and update existing tags.
+    </li>
+
+    <li class="three">
+        <h5>View Data</h5>
+        The @Html.ActionLink("Data", "Index", "Data") tab lets you see all the tag data currently stored for each image, and lets you download the data as a CSV file.
+    </li>
+
+    <li class="four">
+    <h5>View Tags</h5>
+    The @Html.ActionLink("Tag", "Index", "Tag") tab lets you see all of the tags currently in the system, and browse visual examples of each.
+    </li>
+</ol>
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('#home_tab').addClass("selected");
+        });
+    </script>
+}

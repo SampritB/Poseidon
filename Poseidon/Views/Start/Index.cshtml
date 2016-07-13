@@ -1,0 +1,12 @@
+﻿@{
+    Layout = "~/Views/Shared/_StartLayout.cshtml";
+}
+
+@{
+    ViewBag.Title = "Start";
+}
+
+<div id="start_button_container">
+    <input type="button" class="press big_button" id="left_start_button" value="Login" onclick="location.href='@Url.Action("Login", "Account")'" />
+    <input type="button" class="press big_button" id="right_start_button" value="Register" onclick="location.href='@Url.Action("Register", "Account")'" />
+</div>

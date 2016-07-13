@@ -1,0 +1,8 @@
+﻿@{
+    ViewBag.Title = "Examples of " + ViewBag.Tag;
+}
+
+<h2>Examples of @ViewBag.Tag</h2>
+@Html.Action("Grid", new { term = ViewBag.Tag, includeAll = true, includeLinks = false })
+
+@Html.ActionLink("<< Back to tags", "Index")

@@ -1,0 +1,267 @@
+﻿@model Poseidon.Models.LabelModel
+
+@{
+    ViewBag.Title = "Label";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@if (Model.ImageInfo != null)
+{
+<a class="labelTitle" href="@Url.Action("Labels", "Data", new { id = Model.ImageInfo.Id })">@Model.ImageInfo.Title</a>
+<div id="labelImage">
+    <table>
+    <tr>
+        <td><label for="scaleSlider">Scale:</label></td>
+        <td class="slider"><div id="scaleSlider"></div></td>
+        <td class="sliderValue" id="scaleValue">@(Model.Scale*10 + "%")</td>
+        <td><label>Mode:</label></td>
+        <td class="toolbar">
+            <table><tr>
+            <td><img id="selectModeB" class="selected" src="@Url.Content("~/Images/selectMode.png")" title="Select" alt="select" /></td>
+            <td><img id="panModeB" src="@Url.Content("~/Images/panMode.png")" title="Pan" alt="pan" /></td>
+            <td><img id="pointModeB" src="@Url.Content("~/Images/pointMode.png")" title="Add Point" alt="point" /></td>
+            <td><img id="ellipseModeB" src="@Url.Content("~/Images/ellipseMode.png")" title="Add Ellipse" alt="ellipse" /></td>
+            </tr></table>
+        </td>
+        <td><input id="deleteB" value="Delete" type="button" /></td>
+    </tr>
+    <tr>
+        <td><label for="filterSlider">Filter:</label></td>
+        <td class="slider"><div id="filterSlider"></div></td>
+        <td class="sliderValue" id="filterValue">
+            @if (Model.Labels.Count > 0)
+            {
+                @Model.Labels[0].UpdateDate
+            }else{
+                @DateTime.Now
+            }
+        </td>
+        <td><label for="tag">Tag:</label></td>
+        <td colspan="5"><input id="tag" type="text" value="Unknown" /></td>
+    </tr>
+    </table>
+    
+    <input type="hidden" id="createLabelURL" value="@Url.Action("Create", "Label")" />
+    <input type="hidden" id="updateLabelURL" value="@Url.Action("Update", "Label")" />
+    <input type="hidden" id="deleteLabelURL" value="@Url.Action("Delete", "Label")" />
+    <input type="hidden" id="tagURL" value="@Url.Action("Tag", "Label")" />
+    
+<div id="holder">
+    <img id="image" src="@Url.Action("Index", "Image", new { id = Model.ImageInfo.Id })" alt="Label Image" />
+</div>
+</div>
+}
+
+<table>
+<tr>
+    <td><div id="filetree"></div></td>
+    <td><a id="imageLink" href="#"><img id="preview" width="640" height="480" alt="" /></a></td>
+</tr>  
+</table>  
+
+<div id="labelDialog" title="Label Info">
+</div>
+
+@section scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        function updateTree() {
+            $('#filetree').fileTree({ root: '', script: '@Url.Action("Index", "Folder")' }, function (file) {
+                $('#preview').attr('src', '@Url.Action("Index", "Image")?width=640&drawLabels=true&id=' + file);
+                $('#imageLink').attr('href', '@Url.Action("Index", "Label", new {})?id=' + file);
+            }, function (folder) {
+                $('#folder').val(folder);
+            });
+        }
+
+        updateTree();
+
+        $('#label_tab').addClass("selected");
+    });
+</script>
+
+@if (Model.ImageInfo != null)
+{
+    <script src="~/Scripts/labelCanvas.js"></script>
+<script type="text/javascript">
+
+    (function($) {
+        $.fn.onEnter = function(func) {
+            this.bind('keypress', function(e) {
+                if (e.keyCode == 13) func.apply(this, [e]);    
+            });               
+            return this; 
+        };
+    })(jQuery);
+    
+    var imageInfo = {
+        width: @Model.ImageInfo.Width,
+        height: @Model.ImageInfo.Height,
+        id : "@Model.ImageInfo.Id"
+    };
+    var labelCanvas = new LabelCanvas(@Model.TranslateX, @Model.TranslateY, @Model.Scale, imageInfo);
+    var pointLabels = new Array();
+
+    @for(int i=0; i<Model.Labels.Count; i++)
+    {
+        Poseidon.Models.Label label = Model.Labels[i];
+        if (label.IsEllipse)
+        {
+            @Html.Raw(string.Format("\tlabelCanvas.registerEllipse(\"{0}\",{1},{2},{3},{4},\"{5}\");\n", label.Id, label.X, label.Y, label.XRadius, label.YRadius, label.Tag));
+        }
+        else
+        {
+            @Html.Raw(string.Format("\tlabelCanvas.registerPoint(\"{0}\",{1},{2},\"{3}\");\n", label.Id, label.X, label.Y, label.Tag));
+        }
+        @Html.Raw(string.Format("\tpointLabels[{0}] = \"{1}\";\n", i, label.UpdateDate));
+    }
+    pointLabels[@Model.Labels.Count] = "@DateTime.UtcNow";
+
+    labelCanvas.updateImage();
+
+    function scaleChange() {
+        var value = $("#scaleSlider").slider("value");
+        labelCanvas.setScale(value);
+        $("#scaleValue").html(value*10 + "%");
+    }
+
+    function filterChange() {
+        var value = $("#filterSlider").slider("value");
+        labelCanvas.setFilter(value);
+        $("#filterValue").html(pointLabels[value]);
+    }
+
+    function toolbarButton() {
+        $("#selectModeB").removeClass("selected");
+        $("#panModeB").removeClass("selected");
+        $("#pointModeB").removeClass("selected");
+        $("#ellipseModeB").removeClass("selected");
+        $(this).addClass("selected");
+        labelCanvas.setMode($(this).attr("alt"));
+    }
+
+    $("#scaleSlider").slider({
+        orientation: "horizontal",
+        range: "min",
+        min: 1,
+        max: 20,
+        value: "@Model.Scale",
+        slide: scaleChange,
+        change: scaleChange
+    });
+
+    $("#filterSlider").slider({
+        orientation: "horizontal",
+        range: "min",
+        min: 0,
+        max: @Model.Labels.Count,
+        value: 0,
+        slide: filterChange,
+        change: filterChange
+    });
+
+    $(document).on("pointSelected", function (e) {
+        $("#tag").val(e.message.tag);
+    });
+
+    $("#tag").keyup(function () {
+        labelCanvas.setTag(this.value);
+    });
+
+    $("#tag").change(function () {
+        labelCanvas.saveTag(this.value);
+    });
+
+    $("#tag").onEnter(function(){
+        labelCanvas.saveTag(this.value);
+    });
+
+    $("#tag").autocomplete({
+        source: "@Url.Action("List", "Tag")",
+        minLength: 2,
+    });   
+
+    $("#selectModeB").click(toolbarButton);
+    $("#panModeB").click(toolbarButton);
+    $("#pointModeB").click(toolbarButton);
+    $("#ellipseModeB").click(toolbarButton);
+
+    $("#deleteB").click(function() {
+        labelCanvas.deletePoint();
+    });
+
+    $("#labelDialog").dialog({
+        autoOpen: false,
+        resizable: false,
+        width: 800,
+        height: 750,
+        modal: true,
+        buttons: {
+            "OK": function() {
+                $(this).dialog("close");
+                var id = $("#labelID").val();
+                var label = $("#labelTag").val();
+                labelCanvas.setTagById(id, label);
+            }
+        }
+    });
+
+    $("#holder").on('labelInfo', function(event, id){
+        $.ajax({
+            url: '@Url.Action("Info")?id=' + id,
+            type: "POST"
+        }).done(function( html ) {
+            $("#labelDialog").html(html);
+            $("#labelDialog").dialog( "open" );
+        });
+    });
+        
+    $(document.body).keydown(function(event){
+        if($(document.activeElement)[0].id == "tag")
+            return;
+        switch(event.keyCode){
+            case 65:
+                $("#selectModeB").click();
+                break;
+
+            case 83:
+                $("#panModeB").click();
+                break;
+
+            case 68:
+                $("#pointModeB").click();
+                break;
+
+            case 70:
+                $("#ellipseModeB").click();
+                break;
+
+            case 46:
+                labelCanvas.deletePoint();
+                break;
+        }
+    });
+
+    var selector = $("#selector");       
+
+    selector.hide();
+
+    var $selectorImage = $("<img src='@Url.Content("~/Images/pointMode.png")' />").insertAfter(selector);    
+
+    $selectorImage.click(function() {            
+        selector.prop('checked', !selector.prop('checked'));
+
+        if(selector.prop("checked")) {
+            $selectorImage.attr("src", "@Url.Content("~/Images/ellipseMode.png")");
+            labelCanvas.setEllipseMode(true);
+        } else {
+            $selectorImage.attr("src", "@Url.Content("~/Images/pointMode.png")");
+            labelCanvas.setEllipseMode(false);
+        }
+    });
+</script>
+}
+}

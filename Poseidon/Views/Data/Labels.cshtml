@@ -1,0 +1,68 @@
+﻿@model IEnumerable<Poseidon.Models.Label>
+
+@{
+    ViewBag.Title = "Labels";
+}
+
+<div>
+<h2>@ViewBag.ImageInfo.Title</h2>
+<table>
+<tr>
+    <td><a href="@Url.Action("Index", "Label", new{id=ViewBag.ImageInfo.Id.ToString()})"><img src="@Url.Action("Index", "Image", new { id = ViewBag.ImageInfo.Id.ToString(), width = 600, drawLabels=true })" alt="@ViewBag.ImageInfo.Title" /></a></td>
+    <td valign="top">
+        <div>
+        @Html.Action("Tags", "Image", new { id = ViewBag.ImageInfo.Id, editable=false })
+        </div>
+    </td>
+</tr>
+</table>
+
+</div>
+<div class="labels">
+<a href="@Url.Action("CSV", new{id=ViewBag.ImageInfo.Id})">Download as CSV</a>
+<table id="dataGrid" class="tablesorter">
+    <thead>
+        <tr>
+            <th>X</th>
+            <th>Y</th>
+            <th>X Radius</th>
+            <th>Y Radius</th>
+            <th>Tag</th>
+            <th>Translate X</th>
+            <th>Translate Y</th>
+            <th>Scale</th>
+            <th>User</th>
+            <th>Create Date</th>
+            <th>Update Date</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var label in Model)
+{
+    <tr>
+        <td>@string.Format("{0:f2}", label.X)</td>
+        <td>@string.Format("{0:f2}", label.Y)</td>
+        <td>@string.Format("{0:f2}", label.XRadius)</td>
+        <td>@string.Format("{0:f2}", label.YRadius)</td>
+        <td>@label.Tag</td>
+        <td>@string.Format("{0:f2}", label.TranslateX)</td>
+        <td>@string.Format("{0:f2}", label.TranslateY)</td>
+        <td>@(.1*label.Scale)</td>
+        <td>@label.UserName</td>
+        <td>@label.CreateDate</td>
+        <td>@label.UpdateDate</td>
+    </tr>
+}
+    </tbody>
+</table>
+</div>
+
+@section scripts{
+<script type="text/javascript">
+    $("#dataGrid").tablesorter();
+    var imageTags = $("#imageTags");
+    if (imageTags != null)
+        imageTags.tablesorter();
+</script>
+}
+

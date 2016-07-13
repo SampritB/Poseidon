@@ -1,0 +1,27 @@
+﻿@model List<Poseidon.Models.Label>
+
+@if (!string.IsNullOrEmpty(ViewBag.Title))
+{
+    <h3>@ViewBag.Title</h3>
+}
+<table>
+<tr>
+@for(int i=0; i<Model.Count; i += 8)
+{
+    <tr>
+    @for (int j = i; j < Math.Min(i + 8, Model.Count); j++)
+    {
+    <td class="tagCell">
+        <a href="@Url.Action("Index", "Label", new {id = Model[j].ImageInfoId})">
+            <img src="@Url.Action("Index", "Image", new { id = Model[j].ImageInfoId.ToString(), w = ViewBag.PatchSize, h = ViewBag.PatchSize, mode="max", crop=Model[j].Crop })" alt="@Model[j].ImageInfoId">
+        </a>
+        @if (ViewBag.IncludeLinks)
+        {
+            @Html.ActionLink(Model[j].Tag, "Examples", new { id = Model[j].Tag })
+        }
+    </td>
+    }
+    </tr>
+}
+</tr>
+</table>

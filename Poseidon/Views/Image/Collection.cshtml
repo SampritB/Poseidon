@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Poseidon.Models.ImageInfo>
+
+@{
+    ViewBag.Title = "Image Collection";
+}
+
+<h2>Upload an Image</h2>
+
+@using (Html.BeginForm("Collection", "Image", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <fieldset>
+        <legend>Upload Image</legend>
+
+        <input type="hidden" name="folder" id="folder" value="" />
+        <div class="editor-label">
+            <label for="file">Filename:</label>
+        </div>
+        <div class="editor-field">
+            <input type="file" name="file" id="file" />
+        </div>
+
+        <input type="submit" />
+    </fieldset>
+}
+
+<h2>Image Collection</h2>
+
+<table>
+    <tr>
+        <td><div id="filetree"></div></td>
+        <td><a href="#" id="imageLink"><img id="preview" width="640" height="480" alt="" /></a></td>
+    </tr>
+</table>
+
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        function updateTree() {
+            $('#filetree').fileTree({ root: '', script: '@Url.Action("Index", "Folder")' }, function (file) {
+                $('#preview').attr('src', '@Url.Action("Index", "Image")?width=640&drawLabels=true&id=' + file);
+                $('#imageLink').attr('href', '@Url.Action("Info", "Image")?id=' + file);
+            }, function (folder) {
+                $('#folder').val(folder);
+            });
+        }
+
+        updateTree();
+    </script>
+}
+
+
