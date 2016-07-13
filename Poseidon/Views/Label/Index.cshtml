@@ -47,7 +47,7 @@
     <input type="hidden" id="deleteLabelURL" value="@Url.Action("Delete", "Label")" />
     <input type="hidden" id="tagURL" value="@Url.Action("Tag", "Label")" />
     
-<div id="holder">
+<div id="holder" style="border:1px dotted black;">
     <img id="image" src="@Url.Action("Index", "Image", new { id = Model.ImageInfo.Id })" alt="Label Image" />
 </div>
 </div>
