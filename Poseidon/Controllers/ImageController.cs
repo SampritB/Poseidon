@@ -209,5 +209,14 @@ namespace Poseidon.Controllers
 
             return Tags(imageInfoId);
         }
+
+        public JsonResult Delete(string id)
+        {
+            var images = _database.GetCollection<ImageInfo>("images");
+
+            images.Remove(Query.EQ("_id", new ObjectId(id)));
+
+            return Json(new { id = id, result = "success" });
+        }
     }
 }

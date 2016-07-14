@@ -22,6 +22,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -390,6 +391,7 @@
     <Content Include="Views\Label\_Dialog.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ClassDiagram2.cd" />
     <None Include="Properties\PublishProfiles\Poseidon.pubxml" />
     <Content Include="Views\Start\Index.cshtml" />
     <Content Include="Views\Shared\_StartLayout.cshtml" />
