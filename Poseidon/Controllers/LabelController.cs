@@ -46,6 +46,8 @@ namespace Poseidon.Controllers
                 TranslateY = 0,
             };
 
+           
+
             if (!string.IsNullOrEmpty(id))
             {
                 model.ImageInfo = images.FindOne(Query.EQ("_id", new ObjectId(id)));
@@ -146,6 +148,11 @@ namespace Poseidon.Controllers
 
         public JsonResult Tag(string id, string tag)
         {
+            if (tag == "")
+            {
+                tag = " ";
+            }
+
             var labels = _database.GetCollection<Label>("labels");
 
             tag = tag.ToLower();
