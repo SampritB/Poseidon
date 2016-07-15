@@ -22,14 +22,14 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Poseidon.RouteConfig">
-    <Position X="5.25" Y="15.25" Width="1.5" />
+    <Position X="5.25" Y="10.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
       <FileName>App_Start\RouteConfig.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Poseidon.WebApiConfig">
-    <Position X="5.25" Y="17.25" Width="1.5" />
+    <Position X="5.25" Y="12.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
       <FileName>App_Start\WebApiConfig.cs</FileName>
@@ -111,21 +111,21 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Poseidon.Controllers.StartController">
-    <Position X="7" Y="15.25" Width="1.5" />
+    <Position X="7" Y="10.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAA=</HashCode>
       <FileName>Controllers\StartController.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Poseidon.Controllers.TagsController">
-    <Position X="8.75" Y="15.25" Width="1.5" />
+    <Position X="8.75" Y="10.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAgAAAAAAAEAAQAAAAAAAAAAAAAQAAAEAQAAAAAI=</HashCode>
       <FileName>Controllers\TagsController.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Poseidon.Controllers.TestController">
-    <Position X="10.5" Y="15.25" Width="1.5" />
+    <Position X="10.5" Y="10.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAA=</HashCode>
       <FileName>Controllers\TestController.cs</FileName>
@@ -149,21 +149,21 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Poseidon.Models.UsersContext">
-    <Position X="3.5" Y="17.25" Width="1.5" />
+    <Position X="3.5" Y="12.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\AccountModels.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Poseidon.Models.UserProfile">
-    <Position X="1.75" Y="17.25" Width="1.5" />
+    <Position X="1.75" Y="12.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAQAAAAAAAAA=</HashCode>
       <FileName>Models\AccountModels.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Poseidon.Models.RegisterExternalLoginModel">
-    <Position X="1.75" Y="15.25" Width="1.5" />
+    <Position X="1.75" Y="10.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAQAAAAAAAAA=</HashCode>
       <FileName>Models\AccountModels.cs</FileName>
@@ -184,7 +184,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Poseidon.Models.RegisterModel">
-    <Position X="3.5" Y="15.25" Width="1.5" />
+    <Position X="3.5" Y="10.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAQAAAAAAIAA=</HashCode>
       <FileName>Models\AccountModels.cs</FileName>
