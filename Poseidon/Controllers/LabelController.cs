@@ -153,7 +153,10 @@ namespace Poseidon.Controllers
                 tag = " ";
             }
 
-            var labels = _database.GetCollection<Label>("labels");
+			//tag = replacer(tag, "\\", " ");
+
+
+			var labels = _database.GetCollection<Label>("labels");
 
             tag = tag.ToLower();
 
@@ -168,6 +171,15 @@ namespace Poseidon.Controllers
             }
             else return Json(new { result = "invalid id" });            
         }
+
+		//method to replace special characters
+
+		public String replacer(string tag, string bad, String replace)
+		{
+			tag.Replace(bad, replace);
+
+			return tag;
+		}
 
         public PartialViewResult Info(string id)
         {
