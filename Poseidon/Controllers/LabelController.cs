@@ -148,10 +148,11 @@ namespace Poseidon.Controllers
 
         public JsonResult Tag(string id, string tag)
         {
-            if (tag == "")
+            if (tag == ""||tag=="\\"||tag=="/"||tag=="@")
             {
-                tag = " ";
+                tag = "untagged";
             }
+			
 
 			//tag = replacer(tag, "\\", " ");
 
