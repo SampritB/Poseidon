@@ -210,11 +210,6 @@ namespace Poseidon.Controllers
             return Tags(imageInfoId);
         }
 
-		public void Delete(string id)
-		{
-			var images = _database.GetCollection<Images>("images");
-
-			images.Remove(Query.EQ("_id", new ObjectId(id)));
-		}
+		
 	}
 }

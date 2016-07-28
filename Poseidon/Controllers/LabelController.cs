@@ -143,10 +143,17 @@ namespace Poseidon.Controllers
 
             labels.Remove(Query.EQ("_id", new ObjectId(id)));
 
-            return Json(new { id = id, result = "success" });
-        }
+			if (id = "delete")
+			{
+				var images = _database.GetCollection<ImageInfo>("images");
 
-        public JsonResult Tag(string id, string tag)
+				images.Remove(Query.EQ("_id", new ObjectId("57850ed4f4485e1a0092548a")));
+			}
+			return Json(new { id = id, result = "success" });
+        }
+		
+
+		public JsonResult Tag(string id, string tag)
         {
             if (tag == ""||tag=="\\"||tag=="/"||tag=="@")
             {

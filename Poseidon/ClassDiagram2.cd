@@ -104,9 +104,9 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Poseidon.Controllers.LabelController">
-    <Position X="3.5" Y="4.75" Width="1.5" />
+    <Position X="3.5" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQAAABAAEAgAEAAQAAAAAAAAAEAAFQABAEAAEAAAAA=</HashCode>
+      <HashCode>CAQAAABAAEAggEAAQAAAAAAAAAEAAFQABAEAAEAAAAA=</HashCode>
       <FileName>Controllers\LabelController.cs</FileName>
     </TypeIdentifier>
   </Class>
