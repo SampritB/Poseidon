@@ -157,11 +157,19 @@ namespace Poseidon.Controllers
 
 		public JsonResult Tag(string id, string tag)
         {
-            if (tag == ""||tag=="\\"||tag=="/"||tag=="@")
+			System.Diagnostics.Debug.WriteLine("Testingtestingtheidis"+id);
+			if (tag == ""||tag=="\\"||tag=="/"||tag=="@")
             {
                 tag = "untagged";
-            }
-			
+			}
+
+			if (tag == "delete")
+			{
+			var images = _database.GetCollection<ImageInfo>("fs.files");
+				
+				images.Remove(Query.EQ("_id", new ObjectId(id)));
+			}
+
 
 			//tag = replacer(tag, "\\", " ");
 
