@@ -194,8 +194,43 @@ namespace Poseidon.Controllers
         public PartialViewResult AddTag(string id, string key, string value)
         {
             var imageTags = _database.GetCollection<ImageTag>("imageTags");
+			System.Diagnostics.Debug.WriteLine("id: " + id + " key: " + key + " value: " + value);
+			if (value == "deleteit")
+			{
+				var imagess = _database.GetCollection<ImageInfo>("images");
 
-            ImageTag tag = new ImageTag { ImageInfoId = id, Key = key, Value = value };
+				imagess.Remove(Query.EQ("_id", new ObjectId(id)));
+
+				var imagesss = _database.GetCollection<Label>("labels");
+
+				imagess.Remove(Query.EQ("ImageInfoId", new ObjectId(id)));
+
+				string lastchar = id.Substring((id.Length - 1), 1);
+				System.Diagnostics.Debug.WriteLine(lastchar);
+				try
+				{
+					int addone = Int32.Parse(lastchar);
+
+					addone = addone + 1;
+					lastchar = addone.ToString();
+					id = id.Remove(id.Length - 1);
+					id = id + addone;
+				}
+				catch(System.FormatException e)
+				{
+					System.Diagnostics.Debug.WriteLine(lastchar);
+					char mylastchar = lastchar[0];
+					mylastchar++;
+					id = id.Remove(id.Length - 1);
+					id = id + mylastchar;
+
+				}
+				var images = _database.GetCollection<ImageInfo>("fs.files");
+
+				images.Remove(Query.EQ("_id", new ObjectId(id)));
+			}
+
+			ImageTag tag = new ImageTag { ImageInfoId = id, Key = key, Value = value };
             imageTags.Insert(tag);
 
             return Tags(id);
@@ -207,7 +242,7 @@ namespace Poseidon.Controllers
 
             imageTags.Remove(Query.EQ("_id", new ObjectId(id)));
 
-            return Tags(imageInfoId);
+			return Tags(imageInfoId);
         }
 
 		
