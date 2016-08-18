@@ -2,7 +2,7 @@
 
 @if (ViewBag.IsEditable)
 {
-    <h3 style="margin-bottom:20px">Image Tags</h3>
+    <h3 style="margin-bottom:20px">Delete Image</h3>
     using (Ajax.BeginForm("AddTag", new AjaxOptions { HttpMethod = "POST", InsertionMode = InsertionMode.Replace, UpdateTargetId = "imageTags" }))
     {
         <input type="hidden" name="id" value="@ViewBag.ImageInfoId" />
