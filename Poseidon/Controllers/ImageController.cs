@@ -191,11 +191,15 @@ namespace Poseidon.Controllers
             return PartialView("_Tags", tags);
         }
 
-        public PartialViewResult AddTag(string id, string key, string value)
+		/*
+		*the addtag method serves as a way to delete an image, if the user puts the value as y. The id is the same as image id so we delete that from the database first and then
+		*add one to id to get a fileid which is used to delete the file from the database. The user should put key as their username so there is a record in db of who deleted what.
+		*/
+		public PartialViewResult AddTag(string id, string key, string value)
         {
             var imageTags = _database.GetCollection<ImageTag>("imageTags");
 			System.Diagnostics.Debug.WriteLine("id: " + id + " key: " + key + " value: " + value);
-			if (value == "y"||value == "Y")
+			if (value == "y"||value == "Y"||value=="yes"||value=="Yes"||value=="YES"||value=="delete"||value=="Delete"||value=="deleteit")
 			{
 				var imagess = _database.GetCollection<ImageInfo>("images");
 
