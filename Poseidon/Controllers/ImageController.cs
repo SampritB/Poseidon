@@ -195,7 +195,7 @@ namespace Poseidon.Controllers
         {
             var imageTags = _database.GetCollection<ImageTag>("imageTags");
 			System.Diagnostics.Debug.WriteLine("id: " + id + " key: " + key + " value: " + value);
-			if (value == "deleteit")
+			if (value == "y"||value == "Y")
 			{
 				var imagess = _database.GetCollection<ImageInfo>("images");
 
