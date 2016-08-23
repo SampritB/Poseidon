@@ -3,8 +3,9 @@
 @if (ViewBag.IsEditable)
 {
     <h3 style="margin-bottom:20px">Delete Image</h3>
-    using (Ajax.BeginForm("AddTag", new AjaxOptions { HttpMethod = "POST", InsertionMode = InsertionMode.Replace, UpdateTargetId = "imageTags" }))
-    {
+	<p> Before deleting an image ensure that there are no labels on the image. If there are, delete the labels before deleting the images</p><br />
+	using (Ajax.BeginForm("AddTag", new AjaxOptions { HttpMethod = "POST", InsertionMode = InsertionMode.Replace, UpdateTargetId = "imageTags" }))
+	{
         <input type="hidden" name="id" value="@ViewBag.ImageInfoId" />
         <table class="tablesorter" style="margin:0">
             <thead>
