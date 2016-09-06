@@ -157,7 +157,6 @@ namespace Poseidon.Controllers
 
 		public JsonResult Tag(string id, string tag)
         {
-			System.Diagnostics.Debug.WriteLine("Testingtestingtheidis"+id);
 			if (tag == ""||tag=="\\"||tag=="/"||tag=="@")
             {
                 tag = "untagged";
